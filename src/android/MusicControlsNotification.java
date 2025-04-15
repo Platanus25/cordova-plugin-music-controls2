@@ -69,6 +69,17 @@ public class MusicControlsNotification {
     	}
 	}
 
+	// 수정할 부분: startForeground() 호출 시 알림과 서비스 타입 명시
+	public void startForeground() {
+    		Notification notification = buildNotification();
+    		startForeground(NOTIFICATION_ID, notification);
+
+    		// Android 14 대응: startForegroundService 대신 startForeground 사용
+    		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        		startForeground(NOTIFICATION_ID, notification, FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK);
+    		}
+	}
+	
 	// Show or update notification
 	public void updateNotification(MusicControlsInfos newInfos){
 		// Check if the cover has changed	
